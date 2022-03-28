@@ -1,10 +1,12 @@
 import React from 'react'
-import MainComponent from '../../component/mainComponent/MainComponent'
+import CenterBox from '../../component/centerBox/CenterBox'
+import Navbar from '../../component/navbar/Navbar'
 
 export default function Home() {
   return (
     <>
-      <MainComponent />
+      <Navbar />
+      <CenterBox />
     </>
   )
 }

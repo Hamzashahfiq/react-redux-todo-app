@@ -179,9 +179,9 @@ export default function Navbar() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Search sx={{ minWidth: '40%' }}>
-              <SearchIconWrapper>
-                <SearchIcon />
+            <Search sx={{ minWidth: '40%',backgroundColor:'rgb(244 246 255 / 60%)' }}>
+              <SearchIconWrapper >
+                <SearchIcon color="secondary" />
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Search…"
