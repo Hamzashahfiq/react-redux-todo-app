@@ -6,8 +6,7 @@ import InputTask from '../inputTask/InputTask'
 import LeftNavbar from '../leftNavbar/LeftNavbar';
 import { useWindowSize, useWindowWidth, useWindowHeight } from '@react-hook/window-size'
 import Modal from '@mui/material/Modal';
-
-
+import DisplayData from '../displayData/DisplayData'
 
 
 
@@ -33,9 +32,6 @@ const style = {
   paddingTop: '60px',
 };
 
-
-
-
 // ----------------------------------------------------------------------------------------
 
 export default function MainComponent(props) {
@@ -58,13 +54,13 @@ export default function MainComponent(props) {
 
   return (
     <>
-      <Box sx={{ height: '100vh', width: '100%', boxSizing: 'border-box', paddingTop: { xs: '54px', sm: '59px' } }}>
-        <Box sx={{ height: '100%', boxSizing: 'border-box', display: 'flex' }}>
+      <Box sx={{ height: '100vh', width: '100%', boxSizing: 'border-box', }}>
+        <Box sx={{ height: '100%', boxSizing: 'border-box', display: 'flex', }}>
 
           {/* left side bar */}
           {leftWindowOpen ?
             width >= 800 ?
-              <Box sx={{ minWidth: '220px', bgcolor: '#EAEAEA', pt: 1 }}>
+              <Box sx={{ minWidth: '220px', bgcolor: '#EAEAEA', pt: 8 }}>
                 <Box component='span' sx={{ display: 'inline-block', position: 'absolute', marginLeft: { xs: '3px', sm: '11px' } }}>
                   <IconButton aria-label="delete" size="large" onClick={() => setleftWindowOpen(false)}>
                     <MenuIcon />
@@ -97,33 +93,32 @@ export default function MainComponent(props) {
           }
 
           {/* center box */}
-          <Box sx={{ px: 2, width: '100%', pt: 1 }}>
-            <Box>
+          <Box sx={{ height: '100%', px: 1, boxSizing: 'border-box', width: '100%', pt: 8, display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ display: 'flex', boxSizing: 'border-box', }}>
               {leftWindowOpen ? null :
-                <Box component='span' sx={{ display: 'inline-block', border: 1, marginLeft: { xs: '-4px', sm: '3px' } }}>
-                  <IconButton aria-label="delete" size="large" sx={{ mb: 2 }} onClick={() => leftNavbarHandler()}>
+                <Box component='span' sx={{ display: 'inline-block', marginLeft: { xs: '-4px', sm: '3px' } }}>
+                  <IconButton aria-label="delete" size="large" onClick={() => leftNavbarHandler()}>
                     <MenuIcon />
                   </IconButton>
-                  <Box component="span" sx={{ typography: 'h5', border: 1, display: 'inline-block', position: 'relative' }}>
-                    {pageName}
-                    <Box component="span" sx={{ border: 1, display: 'inline-block', position: 'absolute', top: '30px',width:'60px' }}  >
-                      <Box component="p" sx={{ typography: 'caption', color: '#797775', marginTop: '5px' }}>
-                        {dayName}, {monthName} {currentDate}
-                      </Box>
-                    </Box>
-                  </Box>
-
                 </Box>}
-
+              <Box component='span' sx={{ paddingTop: '11px', pl: 1, typography: 'h5', display: 'inline-block' }} >
+                {pageName}
+                <Box component="p" sx={{ typography: 'caption', ml: 1, color: '#797775' }}>
+                  {dayName}, {monthName} {currentDate}
+                </Box>
+              </Box>
             </Box>
-            <Box>
+            <Box sx={{ boxSizing: 'border-box', }}>
               <InputTask />
+            </Box>
+            <Box sx={{ boxSizing: 'border-box', overflow: 'auto', height: '100%' }}>
+                <DisplayData />
             </Box>
           </Box>
 
 
           {/* right side bar */}
-          <Box sx={{ border: 1, pt: 2, minWidth: '300px' }}>right</Box>
+          <Box sx={{ border: 1, pt: 8, minWidth: '300px' }}>right</Box>
 
         </Box>
       </Box>
