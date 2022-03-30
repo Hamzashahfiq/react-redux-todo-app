@@ -1,7 +1,7 @@
 import MainComponent from '../../component/mainComponent/MainComponent'
 import Navbar from '../../component/navbar/Navbar'
 
-export default function Home() {
+export default function AssignedToMe() {
   return (
     <>
       <Navbar />

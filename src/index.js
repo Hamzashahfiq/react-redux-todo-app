@@ -9,9 +9,9 @@ import Store from './config/Store'
 
 ReactDOM.render(
   <React.StrictMode>
-  
+    <Provider store={Store}>
       <App />
-
+    </Provider>F
   </React.StrictMode>,
   document.getElementById('root')
 );

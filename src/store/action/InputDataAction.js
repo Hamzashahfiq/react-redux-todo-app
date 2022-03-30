@@ -1,7 +1,8 @@
 
 
-export function InputDataAction() {
-  return ({
-      type: INPUTDATA,
-  })
+export function InputDataAction(inputTask) {
+  return {
+      type: "INPUTDATA",
+      payload: inputTask
+  }
 }
