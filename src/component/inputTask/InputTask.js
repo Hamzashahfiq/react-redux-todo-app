@@ -9,6 +9,7 @@ import { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { useDispatch } from 'react-redux';
 import { InputDataAction } from '../../store/action/InputDataAction';
+import { v4 as uuidv4 } from 'uuid';
 
 
 // for input
@@ -34,6 +35,22 @@ const BootstrapTooltip = styled(({ className, ...props }) => (
 
 export default function InputTask() {
     const [inputTask, setInputTask] = useState("")
+    const dispatch = useDispatch();
+    
+    const onSubmitHandler = () => {
+        if (!inputTask) {
+            alert("please add some task in input field")
+            return
+        }
+        let taskDetail = {
+            id: uuidv4(),
+            task: inputTask
+        }
+        dispatch(InputDataAction(taskDetail))
+        setInputTask('')
+    }
+
+
     return (
         <>
             <Box sx={{ width: '100%', backgroundColor: '#EAEAEA', p: 2,pb:0, borderRadius: '5px', boxSizing: 'border-box', }}>
@@ -45,7 +62,7 @@ export default function InputTask() {
                     <IconButton aria-label="" ><BootstrapTooltip title="Repeat" arrow ><Icon sx={{ color: '#797775' }}>event_repeat</Icon></BootstrapTooltip></IconButton>
                     </Box>
                     <Box sx={{ mt: 2, px: 1, }}>
-                        <Button variant="text" onClick= {useDispatch(InputDataAction(inputTask))} sx={{ textTransform: 'none' }}>Add</Button>
+                        <Button variant="text" onClick= {onSubmitHandler} sx={{ textTransform: 'none' }}>Add</Button>
                     </Box>
                 </Box>
             </Box>

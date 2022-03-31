@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,7 +8,8 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { CompTask, UnCompTask } from '../../store/action/InputDataAction';
 
 
 
@@ -29,21 +30,54 @@ const BootstrapTooltip = styled(({ className, ...props }) => (
 
 
 export default function DispalyData() {
-  const taskData = useSelector((store)=>store.InputDataReducer)
-   console.log(taskData)
+    const [completedTask, setCompletedtask] = useState(false)
+    const [showTaskLable, setCompletedtaskLable] = useState(true)
+
+
+    const dispatch = useDispatch();
+    const taskData = useSelector((store) => store.InputDataReducer.taskDetail)
+    console.log(taskData)
+    const completedTaskDetail = useSelector((store) => store.InputDataReducer.completedTask)
+    const showTask = useSelector((store) => store.InputDataReducer.showTask)
+
+    const completedHandler = (item) => {
+        let completedTask = {
+            id: item.id,
+            task: item.task
+        }
+        dispatch(CompTask(completedTask))
+        alert("Change to completed")
+        setCompletedtask(true)
+        console.log(taskData.length)
+        if (!taskData.length) {
+            console.log(taskData.length)
+            setCompletedtaskLable(false)
+        }
+    }
+    const unCompletedHandler = (item) => {
+        let unCompletedTask = {
+            id: item.id,
+            task: item.task
+        }
+        dispatch(UnCompTask(unCompletedTask))
+        alert("Change to uncompleted task")
+    }
+
     return (
         <div>
-            <Box sx={{ px: 4, overflowY: 'auto',}} >
-                {true ? <Box component='h4' sx={{ my: 1 }}> Tasks  </Box> : null}
+            <Box sx={{ px: 4, overflowY: 'auto', }} >
+                {showTaskLable ?
+                    showTask ? <Box component='h4' sx={{ my: 1 }}> Tasks  </Box> : null
+                    : null}
                 {
-                 taskData.map((item) => {
+                    taskData.map((item) => {
                         return (
                             <Grid key={item.id} className='hoverColor' container sx={{ borderBottom: 1, wordWrap: 'break-word', borderColor: '#e0e0e0', minHeight: "fit-content" }}>
 
-                                <Grid item xs={1} sx={{ minWidth: '30px', textAlign: 'right', }}><BootstrapTooltip title="Mark as completed" placement="top"><Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}/></BootstrapTooltip></Grid>
+                                <Grid item xs={1} sx={{ minWidth: '30px', textAlign: 'right', }}><BootstrapTooltip title="Mark as completed" placement="top"><Checkbox onChange={() => completedHandler(item)} sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }} /></BootstrapTooltip></Grid>
                                 <Grid item xs={6} sm={7} md={9} sx={{ color: 'black', textAlign: 'left' }}>
                                     <Box>
-                                        <Button className='hoverColor' sx={{ color: 'black', textTransform: 'none', display: 'inline-block', backgroundColor: 'inherit', border: 0, width: '100%', padding: '7px 7px', textAlign: 'left' }}>{taskData} </Button>
+                                        <Button className='hoverColor' sx={{ color: 'black', textTransform: 'none', display: 'inline-block', backgroundColor: 'inherit', border: 0, width: '100%', padding: '7px 7px', textAlign: 'left' }}>{item.task} </Button>
                                     </Box>
                                 </Grid>
                                 <Grid item xs={4} sm={3} md={2} sx={{ textAlign: 'center' }}>
@@ -53,18 +87,18 @@ export default function DispalyData() {
 
                             </Grid>
                         )
-                    })  
+                    })
                 }
-                <Box sx={{}}>
-                    { true? <Box component='h4' sx={{ mb: 1, mt: 2 }}> Completed  </Box> : null}
+                <Box>
+                    {completedTask ? <Box component='h4' sx={{ mb: 1, mt: 2 }}> Completed  </Box> : null}
                     {
-                        taskData.map((item) => {
+                        completedTaskDetail.map((item) => {
                             return (
                                 <Grid key={item.id} className='hoverColor' container sx={{ borderBottom: 1, wordWrap: 'break-word', borderColor: '#e0e0e0', minHeight: "fit-content", }}>
-                                    <Grid item xs={1} sx={{ minWidth: '30px', textAlign: 'right', }} ><BootstrapTooltip title="Mark as not completed" placement="top" ><Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }} /></BootstrapTooltip></Grid>
+                                    <Grid item xs={1} sx={{ minWidth: '30px', textAlign: 'right', }} ><BootstrapTooltip title="Mark as not completed" placement="top" ><Checkbox onChange={() => unCompletedHandler(item)} defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }} /></BootstrapTooltip></Grid>
                                     <Grid item xs={6} sm={7} md={9} sx={{ color: 'black', textAlign: 'left' }}>
                                         <Box>
-                                            <Button className='hoverColor' sx={{ display: 'inline-block', textTransform: 'none', backgroundColor: 'inherit', border: 0, color: 'black', width: '100%', padding: '7px 7px', textAlign: 'left' }}><del>{item.taskDetail}</del></Button>
+                                            <Button className='hoverColor' sx={{ display: 'inline-block', textTransform: 'none', backgroundColor: 'inherit', border: 0, color: 'black', width: '100%', padding: '7px 7px', textAlign: 'left' }}><del>{item.task}</del></Button>
                                         </Box>
                                     </Grid>
                                     <Grid item xs={4} sm={3} md={2} sx={{ textAlign: 'center' }}>
