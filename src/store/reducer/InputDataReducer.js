@@ -1,7 +1,8 @@
 const initialState = {
     taskDetail:[],
     completedTask:[],
-    showTask:false,
+    updateData:"",
+    rightBarTaskData:""
 };
 
 
@@ -11,9 +12,48 @@ export default function InputDataReducer(state = initialState, action) {
              let newInputTask = [...state.taskDetail,action.payload]
             return {
                 ...state,
-                taskDetail:newInputTask,
-                showTask:true,
+                taskDetail:[...newInputTask],
             }
+        }
+        case "DELETEHANDLER": {
+             let newTaskDetail = state.taskDetail.filter((item)=>item.id !== action.payload)
+             return {
+                ...state,
+                taskDetail:newTaskDetail,
+            }
+            
+        }
+        case "COMPDELETEHANDLER": {
+             let newCompletedTask = state.completedTask.filter((item)=>item.id !== action.payload)
+             return {
+                ...state,
+                completedTask:newCompletedTask,
+            }
+            
+        }
+        case "UPDATEHANDLER": {
+               let newUpdateData = action.payload
+             return {
+                ...state,
+                updateData:newUpdateData,
+            }
+            
+        }
+        case "SETUPDATEHANDLER": {
+               let newUpdateData = state.taskDetail.map((item)=>{
+                   if  (item.id === action.payload.id ) {
+                       console.log(action.payload.id)
+                       return action.payload
+                   }else{
+                    return item
+                   }
+               })
+              
+             return {
+                ...state,
+                taskDetail:newUpdateData,
+            }
+            
         }
         case "COMPLETEDTASK":{
            let  newTaskDetail =  state.taskDetail.filter((item)=> item.id !== action.payload.id)
@@ -32,6 +72,14 @@ export default function InputDataReducer(state = initialState, action) {
             ...state,
             taskDetail:newTaskDetail,
             completedTask:newCompletedTask
+          }
+        
+        }
+        case "RIGHTBARTASK":{
+              let newRightBarTask = action.payload
+           return {
+            ...state,
+            rightBarTaskData: newRightBarTask
           }
         
         }

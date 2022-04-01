@@ -7,8 +7,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import { useDispatch } from 'react-redux';
-import { InputDataAction } from '../../store/action/InputDataAction';
+import {useSelector, useDispatch } from 'react-redux';
+import { InputDataAction,SetUpdateHandler} from '../../store/action/InputDataAction';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -33,9 +33,10 @@ const BootstrapTooltip = styled(({ className, ...props }) => (
 
 
 
-export default function InputTask() {
-    const [inputTask, setInputTask] = useState("")
+export default function InputTask({inputTask, setInputTask,isUpdate,setIsUpadte}) {
     const dispatch = useDispatch();
+    const updatedId = useSelector((store)=> store.InputDataReducer.updateData.id)
+     
     
     const onSubmitHandler = () => {
         if (!inputTask) {
@@ -48,6 +49,17 @@ export default function InputTask() {
         }
         dispatch(InputDataAction(taskDetail))
         setInputTask('')
+    }
+    const UpdateHandler = () => {
+       console.log(inputTask) 
+          let taskDeatail = {
+              id :updatedId,
+              task:inputTask
+          }
+          dispatch(SetUpdateHandler(taskDeatail))
+          setInputTask("")
+          alert('Updated')
+          setIsUpadte(false)
     }
 
 
@@ -62,8 +74,10 @@ export default function InputTask() {
                     <IconButton aria-label="" ><BootstrapTooltip title="Repeat" arrow ><Icon sx={{ color: '#797775' }}>event_repeat</Icon></BootstrapTooltip></IconButton>
                     </Box>
                     <Box sx={{ mt: 2, px: 1, }}>
-                        <Button variant="text" onClick= {onSubmitHandler} sx={{ textTransform: 'none' }}>Add</Button>
-                    </Box>
+                        { isUpdate ?
+                        <Button variant="text" sx={{ textTransform: 'none' }} onClick={UpdateHandler}>Update</Button>:
+                        <Button variant="text" onClick= {onSubmitHandler} sx={{ textTransform: 'none' }}>Add</Button>}
+                        </Box>
                 </Box>
             </Box>
         </>

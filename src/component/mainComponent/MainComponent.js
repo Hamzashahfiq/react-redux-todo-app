@@ -7,6 +7,7 @@ import LeftNavbar from '../leftNavbar/LeftNavbar';
 import { useWindowSize, useWindowWidth, useWindowHeight } from '@react-hook/window-size'
 import Modal from '@mui/material/Modal';
 import DisplayData from '../displayData/DisplayData'
+import RightSideBar from '../rightSideBar/RightSideBar';
 
 
 
@@ -39,6 +40,10 @@ export default function MainComponent(props) {
   const [width, height] = useWindowSize()
   const [open, setOpen] = React.useState(true);  //model State
   const [leftWindowOpen, setleftWindowOpen] = useState(width >= 800 ? true : false)
+  const [inputTask, setInputTask] = useState("")
+  const [isUpdate, setIsUpadte] = useState(false)
+  const [rightBarOpen,setRightBarOpen] = useState(false)
+  const [rightBarCheck,setRightBarCheck] = useState(true)
 
   // model Function
   const handleOpen = () => setOpen(true);
@@ -109,17 +114,18 @@ export default function MainComponent(props) {
               </Box>
             </Box>
             <Box sx={{ boxSizing: 'border-box', }}>
-              <InputTask />
+              <InputTask inputTask={inputTask} setInputTask={setInputTask} isUpdate = {isUpdate} setIsUpadte = {setIsUpadte} />
             </Box>
             <Box sx={{ boxSizing: 'border-box', overflow: 'auto', height: '100%' }}>
-                <DisplayData />
+                <DisplayData setInputTask={setInputTask} setIsUpadte = {setIsUpadte} setRightBarOpen={setRightBarOpen} setRightBarCheck={setRightBarCheck} />
             </Box>
           </Box>
 
 
           {/* right side bar */}
-          <Box sx={{ border: 1, pt: 8, minWidth: '300px' }}>right</Box>
-
+          {rightBarOpen &&
+              <RightSideBar rightBarCheck={rightBarCheck} setRightBarOpen={setRightBarOpen} />
+          }
         </Box>
       </Box>
     </>
