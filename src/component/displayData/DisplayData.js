@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { CompTask, UnCompTask,TaskDeleteHandler,CompDeleteHandler,UpdateHandler,showRightBarTask} from '../../store/action/InputDataAction';
 import './DisplayData.css'
+import IconCheckBox from '../iconCheckBox/IconCheckBox';
 
 
 // BootstrapTooltip code
@@ -42,6 +43,7 @@ export default function DispalyData({setInputTask,setIsUpadte,setRightBarOpen,se
         }
         dispatch(CompTask(completedTask))
         alert("Change to completed")
+        setRightBarOpen(false)
     }
     const unCompletedHandler = (item) => {
         let unCompletedTask = {
@@ -50,19 +52,23 @@ export default function DispalyData({setInputTask,setIsUpadte,setRightBarOpen,se
         }
         dispatch(UnCompTask(unCompletedTask))
         alert("Change to uncompleted task")
+        setRightBarOpen(false)
     }
     const deleteHandler = (item) => {
         dispatch(TaskDeleteHandler(item.id))
         alert("Deleted")
+        setRightBarOpen(false)
     }
     const compDeleteHandler = (item) => {
         dispatch(CompDeleteHandler(item.id))
         alert("Completed task will be delete")
+        setRightBarOpen(false)
     }
     const updateHandler = (item) => {
         dispatch(UpdateHandler(item))
         setInputTask(item.task)
         setIsUpadte(true)
+        setRightBarOpen(false)
     }
     const rightBarHandler = (item) => {
         dispatch(showRightBarTask(item))
@@ -94,6 +100,7 @@ export default function DispalyData({setInputTask,setIsUpadte,setRightBarOpen,se
                                 <Grid item xs={4} sm={3} md={2} sx={{ textAlign: 'center' }}>
                                     <Tooltip title="Update" placement="bottom"><IconButton aria-label="delete" color="primary" onClick={()=>updateHandler(item)}> <EditIcon sx={{ fontSize: 20 }} /></IconButton></Tooltip>
                                     <Tooltip title="Delete" placement="bottom"><IconButton aria-label="delete" color="error" onClick={()=>deleteHandler(item)}><DeleteIcon sx={{ fontSize: 20 }} /></IconButton></Tooltip>
+                                   {/* <IconCheckBox/> */}
                                 </Grid>
 
                             </Grid>

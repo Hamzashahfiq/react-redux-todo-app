@@ -33,7 +33,7 @@ const BootstrapTooltip = styled(({ className, ...props }) => (
 
 
 
-export default function InputTask({inputTask, setInputTask,isUpdate,setIsUpadte}) {
+export default function InputTask({inputTask, setInputTask,isUpdate,setIsUpadte,palceholder}) {
     const dispatch = useDispatch();
     const updatedId = useSelector((store)=> store.InputDataReducer.updateData.id)
      
@@ -66,7 +66,7 @@ export default function InputTask({inputTask, setInputTask,isUpdate,setIsUpadte}
     return (
         <>
             <Box sx={{ width: '100%', backgroundColor: '#EAEAEA', p: 2,pb:0, borderRadius: '5px', boxSizing: 'border-box', }}>
-                <Input placeholder="Add a task" value={inputTask} onChange={(e)=>setInputTask(e.target.value)} sx={{ backgroundColor: 'white', width: '100%', p: 1, pb: 0 }} />
+                <Input placeholder={palceholder ||'Add a task'} value={inputTask} onChange={(e)=>setInputTask(e.target.value)} sx={{ backgroundColor: 'white', width: '100%', p: 1, pb: 0 }} />
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Box sx={{ pt:1, px: 1, }}>
                     <IconButton aria-label="" ><BootstrapTooltip title="Add due date" arrow ><Icon sx={{ color: '#797775' }}>calendar_month</Icon></BootstrapTooltip> </IconButton>

@@ -20,7 +20,8 @@ import {
     useWindowWidth,
     useWindowHeight,
 } from '@react-hook/window-size'
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import {CompTask, UnCompTask,TaskDeleteHandler,CompDeleteHandler } from '../../store/action/InputDataAction'
 
 
 // for tooltip
@@ -42,11 +43,11 @@ const style = {
     height: '100vh',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    zIndex:600
+    zIndex: 600
 };
 
 
-export default function RightSideBar({rightBarCheck,setRightBarOpen}) {
+export default function RightSideBar({ rightBarCheck, setRightBarOpen,setRightBarCheck }) {
     const [open, setOpen] = React.useState(true);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
@@ -55,21 +56,46 @@ export default function RightSideBar({rightBarCheck,setRightBarOpen}) {
     };
 
     const [width, height] = useWindowSize()
-    const taskData = useSelector((store)=>store.InputDataReducer.rightBarTaskData)
-      console.log(taskData)
+    const taskData = useSelector((store) => store.InputDataReducer.rightBarTaskData)
+    const dispatch = useDispatch()
+    console.log(taskData)
+
+     const unCompletedTaskhandler = () => {
+        dispatch(CompTask(taskData))
+        setRightBarCheck(false)
+        alert('Changed to completed')
+     }
+     const completedTaskhandler = () => {
+        dispatch(UnCompTask(taskData))
+        setRightBarCheck(true)
+        alert('Changed to uncompleted')
+     }
+     const uncompDeletehandler = () =>{
+        dispatch(TaskDeleteHandler(taskData.id))
+        handleClose()
+        alert('Task Deleted')
+     }
+     const compTaskDeletehandler = () =>{
+        dispatch(CompDeleteHandler(taskData.id))
+        handleClose()
+        alert('Completed task Deleted')
+     }
+
     return (
         <>
             {width >= 900 ?
-                <Box sx={{ height: '100%', minWidth: '300px',maxWidth: '300px', px: 1, overflowX: 'auto',pt:8, boxSizing: 'border-box', bgcolor: '#EAEAEA', display: 'flex', flexDirection: 'column' }}>
-                    <Box sx={{ flexGrow: 1 }} >
+                <Box sx={{ height: '100%', minWidth: '300px', maxWidth: '300px', px: 1, pt: 8, boxSizing: 'border-box', bgcolor: '#EAEAEA', display: 'flex', flexDirection: 'column' }}>
+                    <Box sx={{ flexGrow: 1,overflowY: 'auto'}} >
                         <Paper sx={{ my: 1 }} >
-                            {rightBarCheck?
-                                <Box sx={{border:1,px:1,}}>
-                                    <Box  sx={{border:1,}}><BootstrapTooltip title="Mark as Completed" placement='top' ><Checkbox checked={false}  /></BootstrapTooltip> </Box>
-                                     <Box sx={{wordWrap: 'break-word',typography: 'subtitle2',overflow:'auto',m:0,p:0,border:1}}>{taskData.task} </Box>
+                            {rightBarCheck ?
+                                <Box sx={{ display: 'flex', }}>
+                                    <Box><BootstrapTooltip title="Mark as Completed" placement='top' ><Checkbox checked={false} onChange={unCompletedTaskhandler} /></BootstrapTooltip> </Box>
+                                    <Box component='p' sx={{ wordWrap: 'break-word', typography: 'subtitle2', overflow: 'auto', m: 0, pt: '11px', px: 1 }}>{taskData.task} </Box>
                                 </Box>
-                                // <Box component='p' sx={{wordWrap: 'break-word',px:1,typography: 'subtitle2',overflow:'auto',m:0,p:0,border:1}}><BootstrapTooltip title="Mark as Completed" placement='top' ><Checkbox checked={false}  /></BootstrapTooltip> {taskData.task} </Box>
-                                : <Box component='p'  sx={{wordWrap: 'break-word',px:1}} ><BootstrapTooltip title="Mark as uncompleted" placement='top' ><Checkbox checked={true} /></BootstrapTooltip> <del> {taskData.task}</del></Box>
+                                : <Box sx={{ display: 'flex' }}>
+                                    <Box><BootstrapTooltip title="Mark as uncompleted" placement='top' ><Checkbox checked={true} onChange={completedTaskhandler} /></BootstrapTooltip> </Box>
+                                    <Box component='p' sx={{ wordWrap: 'break-word', typography: 'subtitle2', overflow: 'auto', m: 0, px: 1, pt: '11px' }}><del> {taskData.task}</del></Box>
+                                </Box>
                             }
                             <Box sx={{ pl: 1, position: 'relative', color: '#757de8' }} > <AddIcon /><Box style={{ position: 'absolute', left: '50px', display: 'inline-Block', }}>Add step</Box></Box>
                         </Paper>
@@ -94,10 +120,10 @@ export default function RightSideBar({rightBarCheck,setRightBarOpen}) {
                         </Paper>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <BootstrapTooltip title="Click for hide" placement='top'><IconButton aria-label="hide" ><ExitToAppIcon /></IconButton></BootstrapTooltip>
-                        {true?
-                            <BootstrapTooltip title="Delete selected task" placement='top'><IconButton aria-label="Delete" ><DeleteIcon /></IconButton></BootstrapTooltip>
-                            : <BootstrapTooltip title="Delete selected task" placement='top'><IconButton aria-label="Delete"><DeleteIcon /></IconButton></BootstrapTooltip>
+                        <BootstrapTooltip title="Click for hide" placement='top'><IconButton aria-label="hide" onClick={handleClose}><ExitToAppIcon /></IconButton></BootstrapTooltip>
+                        {rightBarCheck ?
+                            <BootstrapTooltip title="Delete selected task" placement='top'><IconButton aria-label="Delete" onClick={uncompDeletehandler} sx={{color:'red'}}><DeleteIcon /></IconButton></BootstrapTooltip>
+                            : <BootstrapTooltip title="Delete selected task" placement='top'><IconButton aria-label="Delete" onClick={compTaskDeletehandler} sx={{color:'red'}}><DeleteIcon /></IconButton></BootstrapTooltip>
                         }
                     </Box>
                 </Box> :
@@ -113,8 +139,14 @@ export default function RightSideBar({rightBarCheck,setRightBarOpen}) {
                                 <Box sx={{ flexGrow: 1 }} >
                                     <Paper sx={{ my: 1 }} >
                                         {rightBarCheck ?
-                                            <Box component='h4' sx={{wordWrap: 'break-word',px:1,}} ><BootstrapTooltip title="Mark as Completed" placement='top' ><Checkbox checked={false}  /></BootstrapTooltip>{taskData.task}</Box>
-                                            : <Box component='h4' sx={{wordWrap: 'break-word',px:1}} ><BootstrapTooltip title="Mark as uncompleted" placement='top' ><Checkbox checked={true} /></BootstrapTooltip> <del> {taskData.task}</del></Box>
+                                            <Box sx={{ display: 'flex' }}>
+                                                <Box><BootstrapTooltip title="Mark as Completed" placement='top' ><Checkbox checked={false} onChange={unCompletedTaskhandler} /></BootstrapTooltip> </Box>
+                                                <Box component='p' sx={{ wordWrap: 'break-word', typography: 'subtitle2', overflow: 'auto', m: 0, pt: '11px', px: 1 }}>{taskData.task} </Box>
+                                            </Box>
+                                            : <Box sx={{ display: 'flex' }}>
+                                                <Box><BootstrapTooltip title="Mark as uncompleted" placement='top' ><Checkbox checked={true} onChange={completedTaskhandler} /></BootstrapTooltip> </Box>
+                                                <Box component='p' sx={{ wordWrap: 'break-word', typography: 'subtitle2', overflow: 'auto', m: 0, px: 1, pt: '11px' }}><del> {taskData.task}</del></Box>
+                                            </Box>
                                         }
                                         <Box sx={{ pl: 1, position: 'relative', color: '#757de8' }} > <AddIcon /><Box style={{ position: 'absolute', left: '50px', display: 'inline-Block', }}>Add step</Box></Box>
                                     </Paper>
@@ -139,10 +171,10 @@ export default function RightSideBar({rightBarCheck,setRightBarOpen}) {
                                     </Paper>
                                 </Box>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <BootstrapTooltip title="Click for hide" placement='top'><IconButton aria-label="hide"><ExitToAppIcon /></IconButton></BootstrapTooltip>
-                                    {true?
-                                        <BootstrapTooltip title="Delete selected task" placement='top'><IconButton aria-label="Delete" ><DeleteIcon /></IconButton></BootstrapTooltip>
-                                        : <BootstrapTooltip title="Delete selected task" placement='top'><IconButton aria-label="Delete"><DeleteIcon /></IconButton></BootstrapTooltip>
+                                    <BootstrapTooltip title="Click for hide" placement='top'><IconButton aria-label="hide" onClick={handleClose}><ExitToAppIcon /></IconButton></BootstrapTooltip>
+                                    {rightBarCheck ?
+                                        <BootstrapTooltip title="Delete selected task" placement='top'><IconButton aria-label="Delete" onClick={uncompDeletehandler} sx={{color:'red'}} ><DeleteIcon /></IconButton></BootstrapTooltip>
+                                        : <BootstrapTooltip title="Delete selected task" placement='top'><IconButton aria-label="Delete" onClick={compTaskDeletehandler} sx={{color:'red'}}><DeleteIcon /></IconButton></BootstrapTooltip>
                                     }
                                 </Box>
                             </Box>

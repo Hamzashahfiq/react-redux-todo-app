@@ -1,6 +1,7 @@
 const initialState = {
     taskDetail:[],
     completedTask:[],
+
     updateData:"",
     rightBarTaskData:""
 };
