@@ -63,7 +63,7 @@ export default function Important() {
           {/* left side bar */}
           {leftWindowOpen ?
             width >= 800 ?
-              <Box sx={{ minWidth: '220px', maxWidth: '220px', bgcolor: '#EAEAEA', pt: 8 }}>
+              <Box sx={{ minWidth: '230px', maxWidth: '230px', bgcolor: '#EAEAEA', pt: 8 }}>
                 <Box component='span' sx={{ display: 'inline-block', position: 'absolute', marginLeft: { xs: '3px', sm: '11px' } }}>
                   <IconButton aria-label="delete" size="large" onClick={() => setleftWindowOpen(false)}>
                     <MenuIcon />
@@ -80,7 +80,7 @@ export default function Important() {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
-                  <Box sx={{ height: '100%', minWidth: '220px', maxWidth: '220px', bgcolor: '#EAEAEA', pt: 1 }}>
+                  <Box sx={{ height: '100%', minWidth: '230px', maxWidth: '230px', bgcolor: '#EAEAEA', pt: 1 }}>
                     <Box component='span' sx={{ display: 'inline-block', position: 'absolute', marginLeft: { xs: '3px', sm: '11px' } }}>
                       <IconButton aria-label="delete" size="large" onClick={() => setleftWindowOpen(false)}>
                         <MenuIcon />

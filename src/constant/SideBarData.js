@@ -4,30 +4,31 @@ import PermContactCalendarOutlinedIcon from '@mui/icons-material/PermContactCale
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
+
 export const SideBarData = [
     {
         name: 'My Day',
         icon: <LightModeOutlinedIcon />,
-        link: '/'
+        link: '/',
     },
     {
         name: 'Important',
         icon: <GradeOutlinedIcon />,
-        link: '/important'
+        link: '/important',
     },
     {
         name: 'Planned',
         icon: <PermContactCalendarOutlinedIcon />,
-        link: '/planned'
+        link: '/planned',
     },
     {
         name: 'Assigned to me',
         icon: <PermIdentityOutlinedIcon />,
-        link: '/assigned_to_me'
+        link: '/assigned_to_me',
     },
     {
         name: 'Task',
         icon: <HomeOutlinedIcon/>,
-        link: '/task'
+        link: '/task',
     },
 ]
