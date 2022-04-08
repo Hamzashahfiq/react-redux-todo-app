@@ -49,3 +49,16 @@ export function showRightBarTask(taskData) {
     payload: taskData
   }
 }
+export function UnImportantTask(UnImportanttaskData) {
+  console.log('unimporantaction')
+  return {
+    type:"UNIMPORTANT",
+    payload: UnImportanttaskData
+  }
+}
+export function ImportantTask(ImportanttaskData) {
+  return {
+    type:"IMPORTANT",
+    payload: ImportanttaskData
+  }
+}

@@ -32,6 +32,29 @@ export default function InputDataReducer(state = initialState, action) {
             }
             
         }
+        case "UNIMPORTANT":{
+            console.log('unimporantreducer')
+            let newtaskDetail = state.taskDetail.map((item)=>{
+                if  (item.id === action.payload.id ) {
+                    return {...action.payload,important:true,importantCheck:true }
+                }else{
+                 return item
+                }
+            })
+            let newcompletedTask = state.completedTask.map((item)=>{
+                if  (item.id === action.payload.id ) {
+                    return {...action.payload,important:true,importantCheck:true }
+                }else{
+                 return item
+                }
+            })
+         return {
+          ...state,
+          taskDetail:newtaskDetail,
+          completedTask:newcompletedTask
+        }
+      
+      }
         case "UPDATEHANDLER": {
                let newUpdateData = action.payload
              return {
