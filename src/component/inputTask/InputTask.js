@@ -51,7 +51,6 @@ export default function InputTask({inputTask, setInputTask,isUpdate,setIsUpadte,
         setInputTask('')
     }
     const UpdateHandler = () => {
-       console.log(inputTask) 
           let taskDeatail = {
               id :updatedId,
               task:inputTask

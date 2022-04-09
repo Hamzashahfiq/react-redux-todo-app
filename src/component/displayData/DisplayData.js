@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
@@ -39,14 +39,8 @@ export default function DispalyData({ setInputTask, setIsUpadte, setRightBarOpen
 
     const dispatch = useDispatch();
     const taskData = useSelector((store) => store.InputDataReducer.taskDetail)
-    const  importantUncompleteHandler = useSelector((store) => store.InputDataReducer.taskDetail.importantCheck)
-    const  importantCompleteHandler = useSelector((store) => store.InputDataReducer.completedTask.importantCheck)
-    const  important = useSelector((store) => store.InputDataReducer)
     const completedTaskDetail = useSelector((store) => store.InputDataReducer.completedTask)
-    const [isCheckImportant, setIsCheckImportant] = useState(false)
-    console.log(important)
-
-
+    console.log(taskData)
 
     const completedHandler = (item) => {
         let completedTask = {
@@ -67,6 +61,7 @@ export default function DispalyData({ setInputTask, setIsUpadte, setRightBarOpen
         setRightBarOpen(false)
     }
     const deleteHandler = (item) => {
+        console.log(item)
         dispatch(TaskDeleteHandler(item.id))
         alert("Deleted")
         setRightBarOpen(false)
@@ -93,14 +88,40 @@ export default function DispalyData({ setInputTask, setIsUpadte, setRightBarOpen
         setRightBarCheck(false)
     }
     
-    const unImportantHandler = (item) => {
-        dispatch(UnImportantTask(item))
-        console.log('unimporantreducer')
+    const unCompImportantHandler = (item,checked) => {
+        
+        if (checked === false) {
+            let newImportantTask = {
+                ...item,important:false
+            }
+            dispatch(UnImportantTask(newImportantTask))
+            return
+        }else{
+            let newImportantTask = {
+                ...item,important:true
+            }
+            dispatch(UnImportantTask(newImportantTask))
+            return
+        }
+       
+
     }
 
     const importantHandler = (item) => {
-        dispatch(ImportantTask(item))
-        console.log('imporantreducer')
+        if (checked === false) {
+            let newImportantTask = {
+                ...item,important:false
+            }
+            dispatch(ImportantTask(newImportantTask))
+            return
+        }else{
+            let newImportantTask = {
+                ...item,important:true
+            }
+            dispatch(ImportantTask(newImportantTask))
+            return
+        }
+       
     }
 
 
@@ -123,12 +144,8 @@ export default function DispalyData({ setInputTask, setIsUpadte, setRightBarOpen
                             <Grid item xs={3} sx={{ textAlign: 'right', minWidth: 'fit-content' }}>
                                 <Tooltip title="Update" placement="bottom"><IconButton aria-label="delete" color="primary" onClick={() => updateHandler(item)}> <EditIcon sx={{ fontSize: 20 }} /></IconButton></Tooltip>
                                 <Tooltip title="Delete" placement="bottom"><IconButton aria-label="delete" color="error" onClick={() => deleteHandler(item)}><DeleteIcon sx={{ fontSize: 20 }} /></IconButton></Tooltip>
-                                 <Checkbox {...label} icon={ <Tooltip title="Mark as important" placement="bottom"><GradeOutlinedIcon onClick={()=>unImportantHandler(item)}/></Tooltip>} checkedIcon={<Tooltip title="Remove importance" placement="bottom"><GradeIcon onClick={()=>importantHandler(item)} /></Tooltip>} />
-                                
-                                {/* {isCheckImportant ?
-                                    <Tooltip title="Remove importance" placement="bottom"><IconButton aria-label="Checked" color="primary" onClick={()=>importantHandler(item)}><GradeIcon sx={{ fontSize: 20, color: '#2564cf' }} /></IconButton></Tooltip>
-                                    : <Tooltip title="Mark as important" placement="bottom"><IconButton aria-label="Unchecked" color="primary" onClick={()=>unImportantHandler(item)}><GradeOutlinedIcon sx={{ fontSize: 20, color: '#767678' }} /></IconButton></Tooltip>
-                                } */}
+                                 <Checkbox {...label}  onChange={(e)=>unCompImportantHandler(item,e.target.checked)} icon={ <Tooltip title="Mark as important" placement="bottom"><GradeOutlinedIcon/></Tooltip>} checkedIcon={<Tooltip title="Remove importance" placement="bottom"><GradeIcon /></Tooltip>} />
+                              
                             </Grid>
 
                         </Grid>
@@ -150,10 +167,7 @@ export default function DispalyData({ setInputTask, setIsUpadte, setRightBarOpen
                                     </Grid>
                                     <Grid item xs={2} sx={{ minWidth: 'fit-content', textAlign: 'right', }}>
                                         <Tooltip title="Delete" placement="bottom"><IconButton aria-label="delete" color="error" onClick={() => compDeleteHandler(item)}><DeleteIcon sx={{ fontSize: 20 }} /></IconButton></Tooltip>
-                                        {isCheckImportant ?
-                                            <Tooltip title="Remove importance" placement="bottom"><IconButton aria-label="Checked" color="primary" onClick={() => unImportantHandler(item)}><GradeIcon sx={{ fontSize: 20, color: '#2564cf' }} /></IconButton></Tooltip>
-                                            : <Tooltip title="Mark as important" placement="bottom"><IconButton aria-label="Unchecked" color="primary" onClick={() => unImportantHandler(item)}><GradeOutlinedIcon sx={{ fontSize: 20, color: '#767678' }} /></IconButton></Tooltip>
-                                        }
+                                        <Checkbox {...label}  onChange={(e)=>importantHandler(item,e.target.checked)} icon={ <Tooltip title="Mark as important" placement="bottom"><GradeOutlinedIcon/></Tooltip>} checkedIcon={<Tooltip title="Remove importance" placement="bottom"><GradeIcon /></Tooltip>} />
                                     </Grid>
                                 </Grid>
                             )

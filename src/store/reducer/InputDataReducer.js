@@ -9,7 +9,7 @@ const initialState = {
 
 export default function InputDataReducer(state = initialState, action) {
     switch (action.type) {
-        case "INPUTDATA": {
+            case "INPUTDATA": {
              let newInputTask = [...state.taskDetail,action.payload]
             return {
                 ...state,
@@ -33,10 +33,9 @@ export default function InputDataReducer(state = initialState, action) {
             
         }
         case "UNIMPORTANT":{
-            console.log('unimporantreducer')
             let newtaskDetail = state.taskDetail.map((item)=>{
                 if  (item.id === action.payload.id ) {
-                    return {...action.payload,important:true,importantCheck:true }
+                    return action.payload
                 }else{
                  return item
                 }
