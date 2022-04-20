@@ -111,7 +111,7 @@ export default function Important() {
               </Box>
             </Box>
             <Box sx={{ boxSizing: 'border-box', }}>
-              <InputTask palceholder={'Add important task'}  />      
+              {/* <InputTask palceholder={'Add important task'}  />       */}
               {/* input props inputTask={inputTask} setInputTask={setInputTask} isUpdate={isUpdate} setIsUpadte={setIsUpadte} */}
             </Box>
            {/* <Box sx={{ boxSizing: 'border-box', overflow: 'auto', height: '100%' }}>

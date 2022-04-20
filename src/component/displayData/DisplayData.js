@@ -88,41 +88,41 @@ export default function DispalyData({ setInputTask, setIsUpadte, setRightBarOpen
         setRightBarCheck(false)
     }
     
-    const unCompImportantHandler = (item,checked) => {
+    // const unCompImportantHandler = (item,checked) => {
         
-        if (checked === false) {
-            let newImportantTask = {
-                ...item,important:false
-            }
-            dispatch(UnImportantTask(newImportantTask))
-            return
-        }else{
-            let newImportantTask = {
-                ...item,important:true
-            }
-            dispatch(UnImportantTask(newImportantTask))
-            return
-        }
+    //     if (checked === false) {
+    //         let newImportantTask = {
+    //             ...item,important:false
+    //         }
+    //         dispatch(UnImportantTask(newImportantTask))
+    //         return
+    //     }else{
+    //         let newImportantTask = {
+    //             ...item,important:true
+    //         }
+    //         dispatch(UnImportantTask(newImportantTask))
+    //         return
+    //     }
        
 
-    }
+    // }
 
-    const importantHandler = (item) => {
-        if (checked === false) {
-            let newImportantTask = {
-                ...item,important:false
-            }
-            dispatch(ImportantTask(newImportantTask))
-            return
-        }else{
-            let newImportantTask = {
-                ...item,important:true
-            }
-            dispatch(ImportantTask(newImportantTask))
-            return
-        }
+    // const importantHandler = (item) => {
+    //     if (checked === false) {
+    //         let newImportantTask = {
+    //             ...item,important:false
+    //         }
+    //         dispatch(ImportantTask(newImportantTask))
+    //         return
+    //     }else{
+    //         let newImportantTask = {
+    //             ...item,important:true
+    //         }
+    //         dispatch(ImportantTask(newImportantTask))
+    //         return
+    //     }
        
-    }
+    // }
 
 
 
@@ -136,15 +136,15 @@ export default function DispalyData({ setInputTask, setIsUpadte, setRightBarOpen
                         <Grid key={item.id} className='hoverColor' container sx={{ borderBottom: 1, wordWrap: 'break-word', borderColor: '#e0e0e0', minHeight: "fit-content" }}>
 
                             <Grid item xs={1} sx={{ minWidth: '30px', textAlign: 'right', }}><BootstrapTooltip title="Mark as completed" placement="top"><Checkbox onChange={() => completedHandler(item)} sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }} /></BootstrapTooltip></Grid>
-                            <Grid item xs={8} sx={{ color: 'black', textAlign: 'left' }}>
+                            <Grid item xs={9} sx={{ color: 'black', textAlign: 'left' }}>
                                 <Box>
                                     <Button className='hoverColor' onClick={() => rightBarHandler(item)} sx={{ color: 'black', textTransform: 'none', display: 'inline-block', backgroundColor: 'inherit', border: 0, width: '100%', padding: '7px 7px', textAlign: 'left' }}>{item.task} </Button>
                                 </Box>
                             </Grid>
-                            <Grid item xs={3} sx={{ textAlign: 'right', minWidth: 'fit-content' }}>
+                            <Grid item xs={2} sx={{ textAlign: 'right', minWidth: 'fit-content' }}>
                                 <Tooltip title="Update" placement="bottom"><IconButton aria-label="delete" color="primary" onClick={() => updateHandler(item)}> <EditIcon sx={{ fontSize: 20 }} /></IconButton></Tooltip>
                                 <Tooltip title="Delete" placement="bottom"><IconButton aria-label="delete" color="error" onClick={() => deleteHandler(item)}><DeleteIcon sx={{ fontSize: 20 }} /></IconButton></Tooltip>
-                                 <Checkbox {...label}  onChange={(e)=>unCompImportantHandler(item,e.target.checked)} icon={ <Tooltip title="Mark as important" placement="bottom"><GradeOutlinedIcon/></Tooltip>} checkedIcon={<Tooltip title="Remove importance" placement="bottom"><GradeIcon /></Tooltip>} />
+                                 {/* <Checkbox {...label}  onChange={(e)=>unCompImportantHandler(item,e.target.checked)} icon={ <Tooltip title="Mark as important" placement="bottom"><GradeOutlinedIcon/></Tooltip>} checkedIcon={<Tooltip title="Remove importance" placement="bottom"><GradeIcon /></Tooltip>} /> */}
                               
                             </Grid>
 
@@ -167,7 +167,7 @@ export default function DispalyData({ setInputTask, setIsUpadte, setRightBarOpen
                                     </Grid>
                                     <Grid item xs={2} sx={{ minWidth: 'fit-content', textAlign: 'right', }}>
                                         <Tooltip title="Delete" placement="bottom"><IconButton aria-label="delete" color="error" onClick={() => compDeleteHandler(item)}><DeleteIcon sx={{ fontSize: 20 }} /></IconButton></Tooltip>
-                                        <Checkbox {...label}  onChange={(e)=>importantHandler(item,e.target.checked)} icon={ <Tooltip title="Mark as important" placement="bottom"><GradeOutlinedIcon/></Tooltip>} checkedIcon={<Tooltip title="Remove importance" placement="bottom"><GradeIcon /></Tooltip>} />
+                                        {/* <Checkbox {...label}  onChange={(e)=>importantHandler(item,e.target.checked)} icon={ <Tooltip title="Mark as important" placement="bottom"><GradeOutlinedIcon/></Tooltip>} checkedIcon={<Tooltip title="Remove importance" placement="bottom"><GradeIcon /></Tooltip>} /> */}
                                     </Grid>
                                 </Grid>
                             )

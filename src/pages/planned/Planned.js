@@ -111,7 +111,7 @@ export default function Planned() {
               </Box>
             </Box>
             <Box sx={{ boxSizing: 'border-box', }}>
-              <InputTask  />      
+              {/* <InputTask  />       */}
               {/* input props inputTask={inputTask} setInputTask={setInputTask} isUpdate={isUpdate} setIsUpadte={setIsUpadte} */}
             </Box>
            {/* <Box sx={{ boxSizing: 'border-box', overflow: 'auto', height: '100%' }}>
